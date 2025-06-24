@@ -5,7 +5,7 @@ def main():
     memory = MemoryStore()
     agent = ReasoningAgent(memory)
 
-    print("🧠 Lifelong Agent started. Type 'exit' to quit.\n")
+    print("Lifelong Agent started. Type 'exit' to quit.\n")
 
     while True:
         user_input = input("You: ")
