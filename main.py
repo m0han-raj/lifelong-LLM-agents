@@ -16,5 +16,7 @@ def main():
         response = agent.respond(user_input)
         print(f"Bot: {response}\n")
 
+        agent.memory.save_to_disk()
+
 if __name__ == "__main__":
     main()
