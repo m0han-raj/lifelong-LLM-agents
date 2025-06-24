@@ -44,6 +44,10 @@ Type your messages. Type `exit` or `quit` to stop.
 - Python 3.8+
 - See `requirements.txt` for all dependencies
 
+## Results
+
+![the text outcomes with memory utilisation](images/chat_image.png)
+
 ## Reference
 
 [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/pdf/2304.03442)
