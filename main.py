@@ -1,5 +1,7 @@
 from agent.reasoning import ReasoningAgent
 from memory.store import MemoryStore
+from dotenv import load_dotenv
+load_dotenv()
 
 def main():
     memory = MemoryStore()
