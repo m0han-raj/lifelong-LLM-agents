@@ -53,4 +53,5 @@ Type your messages. Type `exit` or `quit` to stop.
 [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/pdf/2304.03442)
 
 ## License
-MIT License
+
+this project is under **MIT License**
