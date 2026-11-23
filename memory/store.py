@@ -1,7 +1,9 @@
 import json
 import os
+
 from memory.episodic import EpisodicMemory
 from memory.semantic import SemanticMemory
+
 
 class MemoryStore:
     def __init__(self):
@@ -19,12 +21,10 @@ class MemoryStore:
     def save_to_disk(self, path="data"):
         os.makedirs(path, exist_ok=True)
 
-        
         episodic_data = self.episodic.collection.get()
         with open(os.path.join(path, "episodic_memory.json"), "w") as f:
             json.dump(episodic_data, f, indent=2)
 
-        
         semantic_data = self.semantic.retrieve()
         with open(os.path.join(path, "semantic_memory.txt"), "w") as f:
             f.write(semantic_data)

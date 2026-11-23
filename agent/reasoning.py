@@ -1,6 +1,8 @@
-import os
-import requests
 import json
+import os
+
+import requests
+
 
 class ReasoningAgent:
     def __init__(self, memory_store):
@@ -12,7 +14,9 @@ class ReasoningAgent:
         # Retrieve relevant memories
         episodic_mem, semantic_context = self.memory.retrieve(query)
 
-        episodic_text = "\n".join([f"User: {m['user']}\nBot: {m['bot']}" for m in episodic_mem])
+        episodic_text = "\n".join(
+            [f"User: {m['user']}\nBot: {m['bot']}" for m in episodic_mem]
+        )
 
         prompt = f"""You are a helpful assistant with lifelong memory.
 
@@ -28,25 +32,25 @@ Bot:"""
 
         headers = {
             "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
 
         payload = {
             "model": self.model,
-            "messages": [
-                {"role": "user", "content": prompt}
-            ],
-            "temperature": 0.7
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0.7,
         }
 
         response = requests.post(
             "https://api.together.xyz/v1/chat/completions",
             headers=headers,
-            data=json.dumps(payload)
+            data=json.dumps(payload),
         )
 
         if response.status_code != 200:
-            raise RuntimeError(f"Together API error: {response.status_code} - {response.text}")
+            raise RuntimeError(
+                f"Together API error: {response.status_code} - {response.text}"
+            )
 
         answer = response.json()["choices"][0]["message"]["content"].strip()
 

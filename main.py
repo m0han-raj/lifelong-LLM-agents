@@ -1,7 +1,10 @@
+from dotenv import load_dotenv
+
 from agent.reasoning import ReasoningAgent
 from memory.store import MemoryStore
-from dotenv import load_dotenv
+
 load_dotenv()
+
 
 def main():
     memory = MemoryStore()
@@ -17,6 +20,7 @@ def main():
         print(f"Bot: {response}\n")
 
         agent.memory.save_to_disk()
+
 
 if __name__ == "__main__":
     main()
