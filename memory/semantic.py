@@ -1,6 +1,9 @@
-import openai
 import os
+
+import openai
+
 from prompts.refine_memory import SEMANTIC_SUMMARY_PROMPT
+
 
 class SemanticMemory:
     def __init__(self):
@@ -15,7 +18,7 @@ class SemanticMemory:
         response = openai.ChatCompletion.create(
             model="mistralai/Mixtral-8x7B-Instruct-v0.1",
             messages=[{"role": "user", "content": prompt}],
-            stream=False
+            stream=False,
         )
         summary = response["choices"][0]["message"]["content"].strip()
         self.knowledge.append(summary)

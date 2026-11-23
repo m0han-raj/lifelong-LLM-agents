@@ -1,57 +1,73 @@
-# Lifelong Agents
+# Lifelong LLM Agents
 
-Lifelong Agents is an AI assistant framework that combines episodic and semantic memory to provide context-aware, persistent conversations. The agent remembers past interactions and can distill long-term knowledge from them, enabling more intelligent and personalized responses over time.
+A command-line chat assistant with persistent memory. It stores past conversations as episodic memory, retrieves the most relevant ones for each new query, and can distill long-term knowledge into semantic memory. The design is inspired by the memory architecture in *Generative Agents: Interactive Simulacra of Human Behavior*.
 
+## Features
 
+- **Episodic memory**: every user/bot exchange is embedded (`all-MiniLM-L6-v2`) and stored in a persistent ChromaDB collection; the top 3 similar exchanges are recalled for each query.
+- **Semantic memory**: summarizes interaction history into concise long-term knowledge using a prompt in `prompts/refine_memory.py`.
+- **LLM backend**: calls `mistralai/Mixtral-8x7B-Instruct-v0.1` through the Together AI API.
+- **Persistence**: memory is written to the `data/` directory after each turn.
 
-## Project Structure
+## Project structure
+
 ```
-main.py                  
-agent/
-  reasoning.py           
-memory/
-  episodic.py            
-  semantic.py            
-  store.py              
-prompts/
-  refine_memory.py       
-data/     
-  data will be saved after running
+.
+├── main.py                 # CLI chat loop
+├── agent/
+│   └── reasoning.py        # ReasoningAgent: builds the prompt and calls the LLM
+├── memory/
+│   ├── episodic.py         # ChromaDB-backed episodic memory
+│   ├── semantic.py         # Summarized long-term knowledge
+│   └── store.py            # MemoryStore: combines both memories, saves to disk
+├── prompts/
+│   └── refine_memory.py    # Semantic summarization prompt
+├── images/
+│   └── chat_image.png      # Example conversation
+├── requirements.txt
+└── LICENSE
 ```
+
+The `data/` directory is created at runtime and is git-ignored.
 
 ## Setup
-1. **Clone the repository**
-2. **Install dependencies** (preferably in a virtual environment):
-```powershell
+
+Requires Python 3.8+.
+
+```bash
 python -m venv env
-.\env\Scripts\activate
+source env/bin/activate        # Windows: .\env\Scripts\activate
 pip install -r requirements.txt
 ```
-3. **Set your Together API key**
-   - Create a `.env` file in the project root:
- ```
- TOGETHER_API_KEY=your_api_key_here
- ```
+
+Create a `.env` file in the project root with your Together API key:
+
+```
+TOGETHER_API_KEY=your_api_key_here
+```
 
 ## Usage
-Run the chatbot from the command line:
-```powershell
+
+```bash
 python main.py
 ```
-Type your messages. Type `exit` or `quit` to stop.
 
-## Requirements
-- Python 3.8+
-- See `requirements.txt` for all dependencies
+Type messages at the `You:` prompt. Type `exit` or `quit` to stop.
 
 ## Results
 
-![the text outcomes with memory utilisation](images/chat_image.png)
+Example conversation showing the agent using its memory:
 
-## Reference
+![Chat output with memory utilisation](images/chat_image.png)
 
-[Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/pdf/2304.03442)
+## Tech stack
+
+Python, ChromaDB, sentence-transformers, Together AI API (Mixtral-8x7B-Instruct), python-dotenv.
+
+## References
+
+- [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/pdf/2304.03442)
 
 ## License
 
-this project is under **MIT License**
+MIT. See [LICENSE](LICENSE).
